@@ -23,10 +23,6 @@ int reply;
  * Bootstrap
  */
 void setup() {
-
-  //  Serial.begin(9600);
-  //  Serial.print("*");
-
   lcd.begin(16, 2);
   lcd.home();
   pinMode(switchPin, INPUT);
@@ -38,7 +34,6 @@ void setup() {
 }
 
 void loop() {
-  //  Serial.print(".");
   switchState = digitalRead(switchPin);
   if (switchState != prevSwitchState) {
     if (switchState == LOW) {
