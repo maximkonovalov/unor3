@@ -13,6 +13,7 @@
 
 #define LED 13
 #define DELAY 500
+
 /*
  * Bootstrap
  */
@@ -30,9 +31,9 @@ void setup() {
 void loop() {
   Serial.print(".");
   digitalWrite(LED, HIGH);
-  delay(DELAY);    
+  delay(DELAY);
   digitalWrite(13, LOW);
-  delay(DELAY);    
+  delay(DELAY);
 }
 
 /* EOF */
