@@ -12,12 +12,9 @@
  */
 #include <LiquidCrystal.h>
 
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-
 const int switchPin = 6;
-int switchState = 0;
-int prevSwitchState = 0;
-int reply;
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 /*
  * Bootstrap
@@ -34,6 +31,10 @@ void setup() {
 }
 
 void loop() {
+  int switchState = 0;
+  int prevSwitchState = 0;
+  int reply;
+
   switchState = digitalRead(switchPin);
   if (switchState != prevSwitchState) {
     if (switchState == LOW) {
