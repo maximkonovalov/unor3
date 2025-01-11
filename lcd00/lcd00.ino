@@ -28,10 +28,13 @@ void setup() {
   //  Serial.print("*");
 
   lcd.begin(16, 2);
+  lcd.home();
   pinMode(switchPin, INPUT);
   lcd.print("Ask the");
   lcd.setCursor(0, 1);
-  lcd.print("Crystall Ball!");
+  lcd.print("Crystall Ball! ");
+  lcd.cursor();
+  lcd.blink();
 }
 
 void loop() {
@@ -42,36 +45,33 @@ void loop() {
       reply = random(8);
 
       lcd.clear();
-      lcd.setCursor(0, 0);
+      lcd.home();
       lcd.print("The ball says:");
       lcd.setCursor(0, 1);
       switch (reply) {
         case 0:
-          lcd.print("Yes");
+          lcd.print("Yes ");
           break;
         case 1:
-          lcd.print("Most likely");
+          lcd.print("Most likely ");
           break;
         case 2:
-          lcd.print("Certainly");
+          lcd.print("Certainly ");
           break;
         case 3:
-          lcd.print("Outlook good");
+          lcd.print("Outlook good ");
           break;
         case 4:
-          lcd.print("Unsure");
+          lcd.print("Unsure ");
           break;
         case 5:
-          lcd.print("Ask again");
+          lcd.print("Ask again ");
           break;
         case 6:
-          lcd.print("Doubtful");
+          lcd.print("Doubtful ");
           break;
         case 7:
-          lcd.print("No");
-          break;
-        case 8:
-          lcd.print("Yes");
+          lcd.print("No ");
           break;
         default:
           break;
