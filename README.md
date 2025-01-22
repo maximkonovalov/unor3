@@ -1,3 +1,3 @@
 # Mm, README?  OK
 
-Just a sandbox to play and have fun with my son, arduino, git, and other computer stuff.
+This is just a sandbox to play and have fun with my son and introduce him to arduino, git, and other computer stuff.
