@@ -8,8 +8,10 @@
  */
 
 /*
- * OLED 96x96 experiments with Seeed OLED Display 96*96 library
- * https://github.com/Seeed-Studio/OLED_Display_96X96
+ * Grove OLED display V2.1.  It appears to be 128x128 pcs.
+ *
+ * Seeed OLED Display 96x96 library
+ *   https://github.com/Seeed-Studio/OLED_Display_96X96
  */
 #include <Wire.h>
 #include <SeeedGrayOLED.h>
