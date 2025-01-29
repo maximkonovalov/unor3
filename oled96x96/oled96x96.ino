@@ -28,7 +28,7 @@ void setup() {
   SeeedGrayOled.setVerticalMode();
 
   for (i = 0; i < max_rows; i++) {
-    SeeedGrayOled.setTextXY(i, 0);
+    SeeedGrayOled.setTextXY(i, -2);
     SeeedGrayOled.putString("0123456789012345");
   }
 }
