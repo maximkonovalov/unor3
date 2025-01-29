@@ -8,7 +8,7 @@
  */
 
 /*
- * Grove OLED display 1.2" V2.1, SH1107G, 128x128 pcs.
+ * Grove OLED display 1.2" V2.1, I2C SH1107G, 128x128 pcs.
  *  https://www.seeedstudio.com/Grove-OLED-Display-1-12-V2.html
  *
  * Seeed OLED Display 96x96 library
