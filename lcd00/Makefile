@@ -4,7 +4,7 @@
 
 CC =		arduino-cli
 BOARD =		arduino:avr:uno
-SERIAL = 	/dev/cu.usbmodem141101
+SERIAL = 	/dev/cu.usbserial-14130
 
 all:
 	$(CC) compile -v --fqbn $(BOARD)
