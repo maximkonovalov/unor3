@@ -7,17 +7,6 @@
  * the Arduino Uno R3 board.
  */
 
-/*
- * This is a sketch for the octopus project here
- * https://osoyoo.com/2019/09/19/osoyoo-model-3-robot-learning-kit-lesson-2-ir-remote-controlled/
- *
- * Arduino Uno R3 coupled together with L293D motor shield.
- * IR transiver is connected to pin #12.
- *
- * IRremote library should be < 2.6.0 as they changed the interface
- * greatly later.
- */
-
 #include <IRremote.h>
 #include <AFMotor.h>
 
