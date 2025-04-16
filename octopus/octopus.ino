@@ -89,8 +89,8 @@ void motor_left_turn() {
 void motor_backward() {
   Serial.println("motor_backward()");
 
-  motor_right.setSpeed(91);
-  motor_left.setSpeed(91);
+  motor_right.setSpeed(127);
+  motor_left.setSpeed(127);
 
   motor_right.run(RELEASE);
   motor_left.run(RELEASE);
