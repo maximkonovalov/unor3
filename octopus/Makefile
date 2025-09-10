@@ -4,7 +4,8 @@
 
 CC =		arduino-cli
 BOARD =		arduino:avr:uno
-SERIAL = 	/dev/cu.usbmodem141101
+# XXX gross hack as it seems macos likes to change its name often
+SERIAL = 	/dev/cu.usbserial-*
 
 all:
 	$(CC) compile -v --fqbn $(BOARD)

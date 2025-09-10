@@ -8,115 +8,85 @@
  */
 
 #include <IRremote.h>
-#include <AFMotor.h>
 
 /* Remote Control Codes */
-#define FWRD  0x00FF18E7
-#define BACK  0x00FF4AB5
-#define LEFT  0x00FF10EF
-#define RIGHT 0x00FF5AA5
-#define STOP  0x00FF38C7
+#define FWRD		0x00FF18E7
+#define BACK		0x00FF4AB5
+#define LEFT		0x00FF10EF
+#define RIGHT		0x00FF5AA5
+#define STOP		0x00FF38C7
 
-#define irPin 12
+#define irPin		12
+
+#define MOTOR_A_PIN1	2
+#define MOTOR_A_PIN2	4
+#define MOTOR_B_PIN1	10
+#define MOTOR_B_PIN2	11
 
 IRrecv ir(irPin);
 decode_results results;
 
-AF_DCMotor motor_right(3);
-AF_DCMotor motor_left(4);
+void
+motor_command(int motor_a_pin1, int motor_a_pin2,
+	int motor_b_pin1, int motor_b_pin2) {
+  Serial.println(__func__);
 
-void motor_forward() {
-  Serial.println("motor_forward()");
-
-  motor_right.setSpeed(127);
-  motor_left.setSpeed(127);
-
-  motor_right.run(RELEASE);
-  motor_left.run(RELEASE);
-
-  delay(10);
-
-  motor_right.run(FORWARD);
-  motor_left.run(FORWARD);
+  digitalWrite(MOTOR_A_PIN1, motor_a_pin1);
+  digitalWrite(MOTOR_A_PIN2, motor_a_pin2);
+  digitalWrite(MOTOR_B_PIN1, motor_b_pin1);
+  digitalWrite(MOTOR_B_PIN2, motor_b_pin2);
 }
 
-void motor_stop() {
-  Serial.println("motor_stop()");
-  motor_right.run(RELEASE);
-  motor_left.run(RELEASE);
+void
+motor_forward() {
+  Serial.println(__func__);
+
+  motor_command(HIGH, LOW, HIGH, LOW);
 }
 
-void motor_right_turn() {
-  Serial.println("motor_left_turn()");
+void
+motor_stop() {
+  Serial.println(__func__);
 
-  motor_right.setSpeed(127);
-  motor_left.setSpeed(127);
-
-  motor_right.run(RELEASE);
-  motor_left.run(RELEASE);
-
-  delay(10);
-
-  motor_right.run(FORWARD);
-  motor_left.run(BACKWARD);
-
-  delay(300);
-
-  motor_right.setSpeed(0);
-  motor_left.setSpeed(0);
+  motor_command(LOW, LOW, LOW, LOW);
 }
 
-void motor_left_turn() {
-  Serial.println("motor_left_turn()");
+void
+motor_right_turn() {
+  Serial.println(__func__);
 
-  motor_right.setSpeed(127);
-  motor_left.setSpeed(127);
-
-  motor_right.run(RELEASE);
-  motor_left.run(RELEASE);
-
-  delay(10);
-
-  motor_right.run(BACKWARD);
-  motor_left.run(FORWARD);
-
-  delay(300);
-
-  motor_right.setSpeed(0);
-  motor_left.setSpeed(0);
+  motor_command(LOW, HIGH, HIGH, LOW);
 }
 
-void motor_backward() {
-  Serial.println("motor_backward()");
+void
+motor_left_turn() {
+  Serial.println(__func__);
 
-  motor_right.setSpeed(127);
-  motor_left.setSpeed(127);
-
-  motor_right.run(RELEASE);
-  motor_left.run(RELEASE);
-
-  delay(10);
-
-  motor_right.run(BACKWARD);
-  motor_left.run(BACKWARD);
+  motor_command(HIGH, LOW, LOW, HIGH);
 }
 
-void setup()
-{
+void
+motor_backward() {
+  Serial.println(__func__);
+
+  motor_command(LOW, HIGH, LOW, HIGH);
+}
+
+void
+setup() {
   Serial.begin(9600);
-  Serial.println("motor test");
+  Serial.println(__func__);
+
+  pinMode(MOTOR_A_PIN1, OUTPUT);
+  pinMode(MOTOR_A_PIN2, OUTPUT);
+  pinMode(MOTOR_B_PIN1, OUTPUT);
+  pinMode(MOTOR_B_PIN2, OUTPUT);
 
   ir.enableIRIn();
-
-  motor_right.setSpeed(127);
-  motor_right.run(RELEASE);
-
-  motor_left.setSpeed(127);
-  motor_left.run(RELEASE);
 }
 
-void loop()
-{
+void
+loop() {
   if (ir.decode(&results)) {
     if (1 /* results.value != lastCommand */) {
       if (results.value != 0xFFFFFFFF) {
