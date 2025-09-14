@@ -6,6 +6,15 @@
  * The project was created for my son to play with Arduino board
  */
 
+/*
+ * NewPing library wiki
+ * https://bitbucket.org/teckel12/arduino-new-ping/wiki/Home
+ *
+ * Unfortunatelly, it conflicts with the Tone library.  I
+ * just put "TIMER_ENABLED false" in NewPing.h
+ */
+#include <NewPing.h>
+
 #define DELAY		20
 
 #define LED1_PIN	9
@@ -29,14 +38,8 @@ int step = 10;
 
 int loop_count = 0;
 
-void
-sensor_trigger(int pin) {
-  digitalWrite(pin, LOW);
-  delayMicroseconds(10);
-  digitalWrite(pin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(pin, LOW);
-}
+NewPing sonar1(SENSOR1_TRIG, SENSOR1_ECHO, 50);
+NewPing sonar2(SENSOR2_TRIG, SENSOR2_ECHO, 50);
 
 /*
  * Bootstrap
@@ -48,12 +51,6 @@ setup() {
 
   pinMode(LED1_PIN, OUTPUT);
   pinMode(LED2_PIN, OUTPUT);
-
-  pinMode(SENSOR1_TRIG, OUTPUT);
-  pinMode(SENSOR1_ECHO, INPUT);
-
-  pinMode(SENSOR2_TRIG, OUTPUT);
-  pinMode(SENSOR2_ECHO, INPUT);
 
   intensity1 = 0;
   increment1 = step;
@@ -90,19 +87,18 @@ loop() {
     analogWrite(LED1_PIN, intensity1);
     analogWrite(LED2_PIN, intensity2);
 
-    sensor_trigger(SENSOR1_TRIG);
-    distance1 = pulseIn(SENSOR1_ECHO, HIGH);
+    distance1 = sonar1.ping_cm();
     Serial.print("Sensor 1: ");
     Serial.println(distance1);
 
-    sensor_trigger(SENSOR2_TRIG);
-    distance2 = pulseIn(SENSOR2_ECHO, HIGH);
+    distance2 = sonar2.ping_cm();
     Serial.print("Sensor 2: ");
     Serial.println(distance2);
 
     loop_count = 0;
   }
-  if (distance1 < 2000 || distance2 < 2000) {
+  if ((distance1 && distance1 < 50) ||
+      (distance2 && distance2 < 50)) {
     tone(SPEAKER_PIN, map(intensity2, 0, INTENSITY_MAX, 50, 2000));
     delay(DELAY);
     noTone(SPEAKER_PIN);
