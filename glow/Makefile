@@ -3,7 +3,7 @@
 #
 
 CC =		arduino-cli
-BOARD =		arduino:avr:uno
+BOARD =		arduino:avr:nano
 SERIAL = 	/dev/cu.usb*
 
 all:
