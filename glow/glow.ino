@@ -28,7 +28,8 @@
 #define SENSOR2_TRIG	11
 #define SENSOR2_ECHO	12
 
-#define INTENSITY_MAX	150
+#define INTENSITY_MAX	50
+#define DISTANCE	100
 
 int intensity1;
 int intensity2;
@@ -61,7 +62,6 @@ setup() {
 
 void
 loop() {
-
   int distance1 = 10000;
   int distance2 = 10000;
 
@@ -84,9 +84,6 @@ loop() {
     else if (intensity2 <= 0)
       increment2 = step;
 
-    analogWrite(LED1_PIN, intensity1);
-    analogWrite(LED2_PIN, intensity2);
-
     distance1 = sonar1.ping_cm();
     Serial.print("Sensor 1: ");
     Serial.println(distance1);
@@ -97,11 +94,17 @@ loop() {
 
     loop_count = 0;
   }
-  if ((distance1 && distance1 < 50) ||
-      (distance2 && distance2 < 50)) {
+  if ((distance1 && distance1 < DISTANCE) ||
+      (distance2 && distance2 < DISTANCE)) {
+    analogWrite(LED1_PIN, intensity1);
+    analogWrite(LED2_PIN, intensity2);
+
     tone(SPEAKER_PIN, map(intensity2, 0, INTENSITY_MAX, 50, 2000));
     delay(DELAY);
     noTone(SPEAKER_PIN);
+
+    analogWrite(LED1_PIN, 0);
+    analogWrite(LED2_PIN, 0);
   } else
     delay(DELAY);
 }
