@@ -41,7 +41,7 @@ void
 motor_forward() {
   Serial.println(__func__);
 
-  motor_command(HIGH, LOW, HIGH, LOW);
+  motor_command(HIGH, LOW, LOW, HIGH);
 }
 
 void
@@ -55,21 +55,21 @@ void
 motor_right_turn() {
   Serial.println(__func__);
 
-  motor_command(LOW, HIGH, HIGH, LOW);
+  motor_command(LOW, HIGH, LOW, HIGH);
 }
 
 void
 motor_left_turn() {
   Serial.println(__func__);
 
-  motor_command(HIGH, LOW, LOW, HIGH);
+  motor_command(HIGH, LOW, HIGH, LOW);
 }
 
 void
 motor_backward() {
   Serial.println(__func__);
 
-  motor_command(LOW, HIGH, LOW, HIGH);
+  motor_command(LOW, HIGH, HIGH, LOW);
 }
 
 void
@@ -95,18 +95,26 @@ loop() {
           case FWRD:
             Serial.println("FORWARD command");
             motor_forward();
+            delay(1000);
+            motor_stop();
             break;
           case BACK:
             Serial.println("BACKWARD command");
             motor_backward();
+            delay(1000);
+            motor_stop();
             break;
           case RIGHT:
             Serial.println("RIGHT command");
             motor_right_turn();
+            delay(500);
+            motor_stop();
             break;
           case LEFT:
             Serial.println("LEFT command");
             motor_left_turn();
+            delay(400);
+            motor_stop();
             break;
           case STOP:
             Serial.println("STOP command");

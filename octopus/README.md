@@ -1,6 +1,6 @@
 This is a sketch for the octopus project there
 
-https://www.pcbway.com/project/shareproject/Build_a_Walking_Robot_Theo_Jansen_Style_3D_Printed_Octopod_41bd8bdb.html
+https://youtu.be/TuZUcjsMT5Y
 
 This is a custom board based on Arduino Uno R3 coupled with a L293D
 motor shield.
