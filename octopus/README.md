@@ -11,3 +11,5 @@ IRremote library should be <= 2.6.0 as they changed the interface
 greatly later.  To install it from the comman line, run
 
 ```arduino-cli lib install "IRremote@2.6.0"```
+
+![octopus.jpg](octopus.jpg)
