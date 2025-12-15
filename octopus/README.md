@@ -12,4 +12,4 @@ greatly later.  To install it from the comman line, run
 
 ```arduino-cli lib install "IRremote@2.6.0"```
 
-![octopus.jpg](octopus.jpg)
+![octopus.jpg](https://github.com/maximkonovalov/unor3/blob/main/octopus/octopus.jpeg)
