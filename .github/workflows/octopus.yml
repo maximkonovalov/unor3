@@ -1,0 +1,29 @@
+name: octopus
+
+on:
+  push:
+    paths:
+      - 'octopus/**'
+      - '.github/workflows/octopus.yml'
+  pull_request:
+    paths:
+      - 'octopus/**'
+      - '.github/workflows/octopus.yml'
+  workflow_dispatch:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: arduino/compile-sketches@v1
+        with:
+          fqbn: arduino:avr:uno
+          sketch-paths: |
+            - octopus
+          # The sketch uses the pre-3.0 IRremote interface (decode_results).
+          libraries: |
+            - name: IRremote
+              version: 2.6.0
+          enable-deltas-report: true
