@@ -27,9 +27,9 @@ jobs:
             fqbn: arduino:avr:uno
           - sketch: glow
             fqbn: arduino:avr:nano
+            # NewPing's timer ISR clashes with tone(); see the patch step below.
             libraries: |
-              - name: NewPing
-                version: 1.9.7
+              - source-path: .ci-libs/libraries/NewPing
           - sketch: lcd00
             fqbn: arduino:avr:uno
             libraries: |
@@ -48,6 +48,24 @@ jobs:
                 version: 2.6.0
     steps:
       - uses: actions/checkout@v4
+
+      - uses: arduino/setup-arduino-cli@v2
+        if: matrix.sketch == 'glow'
+
+      # glow needs NewPing with TIMER_ENABLED false (it uses tone(), which
+      # shares Timer2).  Stock NewPing hardcodes it to true, so patch a copy.
+      - name: Patch NewPing
+        if: matrix.sketch == 'glow'
+        env:
+          ARDUINO_DIRECTORIES_USER: ${{ github.workspace }}/.ci-libs
+        run: |
+          arduino-cli lib install NewPing@1.9.7
+          sed -i 's/#define TIMER_ENABLED true/#define TIMER_ENABLED false/' \
+            "$ARDUINO_DIRECTORIES_USER/libraries/NewPing/src/NewPing.h"
+          if grep -q 'TIMER_ENABLED true' "$ARDUINO_DIRECTORIES_USER/libraries/NewPing/src/NewPing.h"; then
+            echo "NewPing patch did not apply" >&2
+            exit 1
+          fi
 
       - uses: arduino/compile-sketches@v1
         with:
