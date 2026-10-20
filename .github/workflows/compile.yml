@@ -1,0 +1,57 @@
+name: compile
+
+on:
+  push:
+    paths:
+      - '**/*.ino'
+      - '**/*.h'
+      - '**/*.cpp'
+      - '.github/workflows/compile.yml'
+  pull_request:
+    paths:
+      - '**/*.ino'
+      - '**/*.h'
+      - '**/*.cpp'
+      - '.github/workflows/compile.yml'
+  workflow_dispatch:
+
+jobs:
+  compile:
+    name: ${{ matrix.sketch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - sketch: blink00
+            fqbn: arduino:avr:uno
+          - sketch: glow
+            fqbn: arduino:avr:nano
+            libraries: |
+              - name: NewPing
+                version: 1.9.7
+          - sketch: lcd00
+            fqbn: arduino:avr:uno
+            libraries: |
+              - name: LiquidCrystal
+                version: 1.0.7
+          - sketch: oled00
+            fqbn: arduino:avr:uno
+            libraries: |
+              - name: OLED Display 96x96
+                version: 1.0.0
+          - sketch: octopus
+            fqbn: arduino:avr:uno
+            # The sketch uses the pre-3.0 IRremote interface (decode_results).
+            libraries: |
+              - name: IRremote
+                version: 2.6.0
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: arduino/compile-sketches@v1
+        with:
+          fqbn: ${{ matrix.fqbn }}
+          sketch-paths: |
+            - ${{ matrix.sketch }}
+          libraries: ${{ matrix.libraries }}
